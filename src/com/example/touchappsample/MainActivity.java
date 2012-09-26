@@ -41,13 +41,18 @@ public class MainActivity extends Activity {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()), 0);
         IntentFilter[] intentFilters = new IntentFilter[] {
-                new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED),
+                new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED),
         };
         String[][] techLists = {
                 {
-                        android.nfc.tech.MifareUltralight.class.getName(),
-                        android.nfc.tech.NfcA.class.getName(),
-                        android.nfc.tech.Ndef.class.getName()
+					android.nfc.tech.NfcA.class.getName(), 
+					android.nfc.tech.NfcB.class.getName(),
+					android.nfc.tech.IsoDep.class.getName(),
+					android.nfc.tech.MifareClassic.class.getName(),
+					android.nfc.tech.MifareUltralight.class.getName(),
+					android.nfc.tech.NdefFormatable.class.getName(),
+					android.nfc.tech.NfcV.class.getName(),
+					android.nfc.tech.NfcF.class.getName(),
                 }
         };
         mNfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilters, techLists);
@@ -65,9 +70,9 @@ public class MainActivity extends Activity {
         super.onNewIntent(intent);
 
         String action = intent.getAction();
-        if (action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)) {
+        if (action.equals(NfcAdapter.ACTION_TAG_DISCOVERED)) {
             byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
-            Toast.makeText(this, rawId.toString(), Toast.LENGTH_SHORT);
+            Toast.makeText(this, rawId.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 }
